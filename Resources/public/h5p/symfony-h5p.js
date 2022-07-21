@@ -29,16 +29,51 @@
                 h5peditor = new ns.Editor(library, $parameters.val(), $editor[0]);
             }
 
-            $("form[name='h5p']").submit(function () {
-                if (h5peditor !== undefined) {
-                    var editorParameters = h5peditor.getParams();
+            /*
+            let formIsUpdated = false;
+            const $form = $('form[name="h5p"]').submit(function (event) {
+              if ($type.length && $type.filter(':checked').val() === 'upload') {
+                return; // Old file upload
+              }
 
-                    if (editorParameters !== undefined) {
-                        $library.val(h5peditor.getLibrary());
-                        $parameters.val(JSON.stringify(editorParameters));
-                    } else {
-                        return false;
-                    }
+              if (h5peditor !== undefined && !formIsUpdated) {
+
+                // Get content from editor
+                h5peditor.getContent(function (content) {
+
+                  // Set main library
+                  $library.val(content.library);
+
+                  // Set params
+                  $params.val(content.params);
+
+                  // Submit form data
+                  formIsUpdated = true;
+                  $form.submit();
+                });
+
+                // Stop default submit
+                event.preventDefault();
+              }
+            });
+            */
+
+            let formIsUpdated = false;
+            const $form = $("form[name='h5p']").submit(function () {
+
+                if (h5peditor !== undefined && !formIsUpdated) {
+                    // Get content from editor
+                    h5peditor.getContent(function (content) {
+                      // Set main library
+                      $library.val(content.library);
+                      // Set params
+                      $params.val(content.params);
+                      // Submit form data
+                      formIsUpdated = true;
+                      $form.submit();
+                    });
+                    // Stop default submit
+                    event.preventDefault();
                 }
             });
         }
