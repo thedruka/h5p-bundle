@@ -79,6 +79,18 @@ class EditorStorage implements \H5peditorStorage
     }
 
     /**
+     * Load a list of available language codes from the database.
+     *
+     * @param string $machineName The machine readable name of the library(content type)
+     * @param int $majorVersion Major part of version number
+     * @param int $minorVersion Minor part of version number
+     * @return array List of possible language codes
+     */
+    public function getAvailableLanguages($machineName, $majorVersion, $minorVersion){
+        return [ 'de' ];
+    }
+
+    /**
      * "Callback" for mark the given file as a permanent file.
      * Used when saving content that has new uploaded files.
      *

@@ -828,7 +828,7 @@ class H5PSymfony implements \H5PFrameworkInterface
     /**
      * Implements getNumContent.
      */
-    public function getNumContent($library_id)
+    public function getNumContent($library_id, $skip = NULL)
     {
         return $this->manager->getRepository('EmmedyH5PBundle:Content')->countLibraryContent($library_id);
     }
@@ -860,6 +860,35 @@ class H5PSymfony implements \H5PFrameworkInterface
      * Implements afterExportCreated
      */
     public function afterExportCreated($content, $filename)
+    {
+    }
+
+    /**
+     * Load addon libraries
+     *
+     * @return array
+     */
+    public function loadAddons()
+    {
+    }
+
+    /**
+     * Load config for libraries
+     *
+     * @param array $libraries
+     * @return array
+     */
+    public function getLibraryConfig($libraries = NULL)
+    {
+    }
+
+    /**
+     * Checks if the given library has a higher version.
+     *
+     * @param array $library
+     * @return boolean
+     */
+    public function libraryHasUpgrade($library)
     {
     }
 
