@@ -64,9 +64,29 @@ class AjaxController extends Controller
     private function libraryCallback(Request $request)
     {
         $editor = $this->get('emmedy_h5p.editor');
-        $editor->ajax->action(\H5PEditorEndpoints::SINGLE_LIBRARY, $request->get('machineName'),
-            $request->get('majorVersion'), $request->get('minorVersion'), $request->getLocale(), $this->get('emmedy_h5p.options')->getOption('storage_dir')
+        /*
+        $editor->ajax->action(
+            \H5PEditorEndpoints::SINGLE_LIBRARY,
+            $request->get('machineName'),
+            $request->get('majorVersion'),
+            $request->get('minorVersion'),
+            $request->getLocale(),
+            $this->get('emmedy_h5p.options')->getOption('storage_dir')
         );
+        */
+        //$machineName, $majorVersion, $minorVersion, $languageCode, $prefix = '', $fileDir = '', $defaultLanguage
+
+        $editor->ajax->action(
+            \H5PEditorEndpoints::SINGLE_LIBRARY,
+            $request->get('machineName'),
+            $request->get('majorVersion'),
+            $request->get('minorVersion'),
+            $request->getLocale(),
+            $this->get('emmedy_h5p.options')->getOption('prefix'),
+            $this->get('emmedy_h5p.options')->getOption('storage_dir'),
+            $request->getLocale()
+        );
+
         exit();
     }
 

@@ -64,6 +64,16 @@ class H5PController extends Controller
     }
 
     /**
+     * @Route("update")
+     */
+    public function updateAction(Request $request)
+    {
+        $this->get('emmedy_h5p.core')->updateContentTypeCache();
+        return $this->render('@EmmedyH5P/update.html.twig', []);
+        //return $this->handleRequest($request);
+    }
+
+    /**
      * @Route("edit/{content}")
      */
     public function editAction(Request $request, Content $content)
