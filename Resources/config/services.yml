@@ -1,4 +1,8 @@
 services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
 
     emmedy_h5p.options:
         class: Emmedy\H5PBundle\Core\H5POptions

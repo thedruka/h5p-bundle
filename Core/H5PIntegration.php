@@ -69,6 +69,10 @@ class H5PIntegration
         $this->contentValidator = $contentValidator;
     }
 
+    public function getSiteUrl(){
+        return $this->requestStack->getMasterRequest()->getScheme()."://".$this->requestStack->getMasterRequest()->getHost();
+    }
+
     /**
      * Prepares the generic H5PIntegration settings
      */
@@ -92,21 +96,26 @@ class H5PIntegration
         $setFinishedUrl = $this->router->generate('emmedy_h5p_interaction_setfinished', ['token' => \H5PCore::createToken('result')]);
         $contentUserDataUrl = $this->router->generate('emmedy_h5p_interaction_contentuserdata', ['contentId' => ':contentId', 'dataType' => ':dataType', 'subContentId' => ':subContentId', 'token' => \H5PCore::createToken('contentuserdata')]);
 
+        $siteUrl =
+
         // Define the generic H5PIntegration settings
         $settings = array(
-            'baseUrl' => "/",
+            'baseUrl' => $this->getSiteUrl(),
             'url' => $this->options->getRelativeH5PPath(),
             'postUserStatistics' => is_object($user) ? $user->getId() : null,
             'ajax' => array(
                 'setFinished' => $setFinishedUrl,
                 'contentUserData' => $contentUserDataUrl,
             ),
+            'core' => $this->getCoreAssets(),
+            'loadedCss' => [],
+            'loadedJs' => [],
             'saveFreq' => $saveContentState ? $saveContentFrequency : false,
             'l10n' => array(
                 'H5P' => $this->core->getLocalization(),
             ),
             'hubIsEnabled' => $hubIsEnabled,
-            'siteUrl' => $this->requestStack->getMasterRequest()->getUri()
+            'siteUrl' => $this->getSiteUrl()
         );
 
         if (is_object($user)) {
@@ -224,6 +233,7 @@ class H5PIntegration
             ],
             'ajaxPath' => $this->router->getContext()->getBaseUrl() . "/h5p/ajax/",
             'libraryPath' => $this->getH5PAssetUrl() . "/h5p-editor/",
+            'libraryUrl' => $this->getSiteUrl() . "/bundles/emmedyh5p/h5p/h5p-editor/",
             'copyrightSemantics' => $this->contentValidator->getCopyrightSemantics(),
             'metadataSemantics' => $this->contentValidator->getMetadataSemantics(),
             'assets' => $this->getEditorAssets(),

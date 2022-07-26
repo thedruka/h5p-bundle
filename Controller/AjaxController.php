@@ -76,14 +76,17 @@ class AjaxController extends Controller
         */
         //$machineName, $majorVersion, $minorVersion, $languageCode, $prefix = '', $fileDir = '', $defaultLanguage
 
+        $options = $this->get('emmedy_h5p.options');
+        $integration = $this->get('emmedy_h5p.integration');
+
         $editor->ajax->action(
             \H5PEditorEndpoints::SINGLE_LIBRARY,
             $request->get('machineName'),
             $request->get('majorVersion'),
             $request->get('minorVersion'),
             $request->getLocale(),
-            $this->get('emmedy_h5p.options')->getOption('prefix'),
-            $this->get('emmedy_h5p.options')->getOption('storage_dir'),
+            $integration->getSiteUrl().$options->getRelativeH5PPath(),
+            $options->getOption('storage_dir'),
             $request->getLocale()
         );
 
