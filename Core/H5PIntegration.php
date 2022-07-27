@@ -206,7 +206,7 @@ class H5PIntegration
                 'minorVersion' => $content->getLibrary()->getMinorVersion(),
             ],
             'params' => $content->getParameters(),
-            'filtered' => $content->getFilteredParameters(),
+            'filtered' => $content->getFilteredParameters(), ////// <----- empty?
             'embedType' => 'div',
         ];
 
