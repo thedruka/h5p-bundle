@@ -30,6 +30,7 @@ var ns = H5PEditor;
         //change if bug name of your entity form here it H5_P
         var $parameters = $('#h5p_parameters');
         var $library = $('#h5p_library');
+        var $title = $('#h5p_title');
         var library = $library.val();
 
         if (h5peditor === undefined) {
@@ -38,14 +39,21 @@ var ns = H5PEditor;
 
         let formIsUpdated = false;
         const $form = $('form[name="h5p"]').submit(function (event) {
-            if (h5peditor !== undefined && !formIsUpdated) {
-                h5peditor.getContent(function (content) {
+            if (h5peditor !== undefined && !formIsUpdated){
+                event.preventDefault();
+                h5peditor.getContent(content => {
+                    /*
+                    console.info('h5peditor.content', content);
+                    console.info('h5peditor.content.params', content.params);
+                    console.info('h5peditor.content.library', content.library);
+                    */
                     $library.val(content.library);
-                    $params.val(content.params);
+                    $parameters.val(content.params);
+                    $title.val(content.title);
                     formIsUpdated = true;
                     $form.submit();
                 });
-                event.preventDefault();
+                return false;
             }
         });
     };

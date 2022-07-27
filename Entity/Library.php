@@ -132,6 +132,13 @@ class Library
      */
     private $contentLibraries;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="add_to", type="text", nullable=true)
+     */
+    private $addTo;
+
     public function __get($name)
     {
         if ($name === "name") {
@@ -413,6 +420,22 @@ class Library
     public function setTutorialUrl($tutorialUrl)
     {
         $this->tutorialUrl = $tutorialUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddTo()
+    {
+        return $this->addTo;
+    }
+
+    /**
+     * @param string $addTo
+     */
+    public function setAddTo($addTo)
+    {
+        $this->addTo = $addTo;
     }
 
     /**

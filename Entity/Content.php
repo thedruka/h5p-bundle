@@ -37,6 +37,13 @@ class Content
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="text", nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="filtered_parameters", type="text", nullable=true)
      */
     private $filteredParameters;
@@ -131,5 +138,20 @@ class Content
     public function setDisabledFeatures($disabledFeatures)
     {
         $this->disabledFeatures = $disabledFeatures;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->parameters;
+    }
+    /**
+     * @param string $parameters
+     */
+    public function setTitle($parameters)
+    {
+        $this->parameters = $parameters;
     }
 }

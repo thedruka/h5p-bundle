@@ -3,6 +3,7 @@
 namespace Emmedy\H5PBundle\Core;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr;
 use Emmedy\H5PBundle\DependencyInjection\Configuration;
 use Emmedy\H5PBundle\Editor\EditorStorage;
 use Emmedy\H5PBundle\Entity\Content;

@@ -54,7 +54,14 @@ class H5PController extends Controller
             $h5pIntegration['contents'][$contentIdStr]['styles'] = $cssFilePaths;
         }
 
-        return $this->render('@EmmedyH5P/show.html.twig', ['contentId' => $content->getId(), 'isFrame' => $content->getLibrary()->isFrame(), 'h5pIntegration' => $h5pIntegration, 'files' => $files]);
+        $vars = [
+            'contentId' => $content->getId(),
+            'isFrame' => $content->getLibrary()->isFrame(),
+            'h5pIntegration' => $h5pIntegration,
+            'files' => $files
+        ];
+
+        return $this->render('@EmmedyH5P/show.html.twig', $vars);
     }
 
     /**
@@ -87,13 +94,13 @@ class H5PController extends Controller
     {
         $formData = null;
         if ($content) {
+            $formData['title'] = (string)$content->getTitle();
             $formData['parameters'] = $content->getParameters();
             $formData['library'] = (string)$content->getLibrary();
         }
         $form = $this->createForm(H5pType::class, $formData);
         $form->handleRequest($request);
         if ($form->isValid()) {
-
             $data = $form->getData();
             $contentId = $this->get('emmedy_h5p.library_storage')->storeLibraryData($data['library'], $data['parameters'], $content);
             return $this->redirectToRoute('emmedy_h5p_h5p_show', ['content' => $contentId]);
