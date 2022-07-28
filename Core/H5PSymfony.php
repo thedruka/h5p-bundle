@@ -749,12 +749,11 @@ class H5PSymfony implements \H5PFrameworkInterface
         $contentLibraries = $this->manager->getRepository('EmmedyH5PBundle:ContentLibraries')->findBy($query, ['weight' => 'ASC']);
         $dependencies = [];
         foreach ($contentLibraries as $contentLibrary) {
-            /** @var Library $library */
             $library = $contentLibrary->getLibrary();
             $dependencies[] = ['libraryId' => $library->getId(), 'machineName' => $library->getMachineName(), 'majorVersion' => $library->getMajorVersion(), 'minorVersion' => $library->getMinorVersion(),
                 'patchVersion' => $library->getPatchVersion(), 'preloadedCss' => $library->getPreloadedCss(), 'preloadedJs' => $library->getPreloadedJs(), 'dropCss' => $contentLibrary->isDropCss(), 'dependencyType' => $contentLibrary->getDependencyType()];
         }
-
+//dump($dependencies);die();
         return $dependencies;
     }
 

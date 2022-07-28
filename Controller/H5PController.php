@@ -111,6 +111,9 @@ class H5PController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             $contentId = $this->get('emmedy_h5p.library_storage')->storeLibraryData($data['library'], $data['parameters'], $content);
+
+dump("-------------------------------------------------------------");die();
+
             return $this->redirectToRoute('emmedy_h5p_h5p_show', ['content' => $contentId]);
         }
         $h5pIntegration = $this->get('emmedy_h5p.integration')->getEditorIntegrationSettings($content ? $content->getId() : null);

@@ -96,8 +96,6 @@ class H5PIntegration
         $setFinishedUrl = $this->router->generate('emmedy_h5p_interaction_setfinished', ['token' => \H5PCore::createToken('result')]);
         $contentUserDataUrl = $this->router->generate('emmedy_h5p_interaction_contentuserdata', ['contentId' => ':contentId', 'dataType' => ':dataType', 'subContentId' => ':subContentId', 'token' => \H5PCore::createToken('contentuserdata')]);
 
-        $siteUrl =
-
         // Define the generic H5PIntegration settings
         $settings = array(
             'baseUrl' => $this->getSiteUrl(),

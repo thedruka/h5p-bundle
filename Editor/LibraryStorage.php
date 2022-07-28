@@ -69,6 +69,8 @@ class LibraryStorage
     private function updateLibraryFiles($contentId, $contentData, $oldLibrary, $oldParameters)
     {
         // Keep new files, delete files from old parameters
+
+        //// TODO: trace dependencies storing from contendData['params']
         $this->editor->processParameters(
             $contentId,
             $contentData['library'],

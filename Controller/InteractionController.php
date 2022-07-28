@@ -44,6 +44,8 @@ class InteractionController extends Controller
 
         $preloaded_dependencies = $this->get('emmedy_h5p.core')->loadContentDependencies($content->getId(), 'preloaded');
 
+dump($preloaded_dependencies);die();
+
         $files = $this->get('emmedy_h5p.core')->getDependenciesFiles($preloaded_dependencies, $this->get('emmedy_h5p.options')->getRelativeH5PPath());
 
         if ($content->getLibrary()->isFrame()) {
@@ -54,9 +56,6 @@ class InteractionController extends Controller
                 return $asset->path;
             }, $files['styles']);
             $coreAssets = $this->get('emmedy_h5p.integration')->getCoreAssets();
-
-//dump($coreAssets);die();
-
             $h5pIntegration['core']['scripts'] = $coreAssets['scripts'];
             $h5pIntegration['core']['styles'] = $coreAssets['styles'];
             $h5pIntegration['contents'][$contentIdStr]['scripts'] = $jsFilePaths;
