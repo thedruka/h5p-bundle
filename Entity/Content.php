@@ -145,13 +145,13 @@ class Content
      */
     public function getTitle()
     {
-        return $this->parameters;
+        return $this->title;
     }
     /**
      * @param string $parameters
      */
-    public function setTitle($parameters)
+    public function setTitle($title)
     {
-        $this->parameters = $parameters;
+        $this->title = $title;
     }
 }

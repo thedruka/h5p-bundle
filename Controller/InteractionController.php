@@ -38,6 +38,47 @@ class InteractionController extends Controller
      */
     public function embedAction(Request $request, Content $content)
     {
+        $h5pIntegration = $this->get('emmedy_h5p.integration')->getGenericH5PIntegrationSettings();
+        $contentIdStr = 'cid-' . $content->getId();
+        $h5pIntegration['contents'][$contentIdStr] = $this->get('emmedy_h5p.integration')->getH5PContentIntegrationSettings($content);
+
+        $preloaded_dependencies = $this->get('emmedy_h5p.core')->loadContentDependencies($content->getId(), 'preloaded');
+
+        $files = $this->get('emmedy_h5p.core')->getDependenciesFiles($preloaded_dependencies, $this->get('emmedy_h5p.options')->getRelativeH5PPath());
+
+        if ($content->getLibrary()->isFrame()) {
+            $jsFilePaths = array_map(function ($asset) {
+                return $asset->path;
+            }, $files['scripts']);
+            $cssFilePaths = array_map(function ($asset) {
+                return $asset->path;
+            }, $files['styles']);
+            $coreAssets = $this->get('emmedy_h5p.integration')->getCoreAssets();
+
+//dump($coreAssets);die();
+
+            $h5pIntegration['core']['scripts'] = $coreAssets['scripts'];
+            $h5pIntegration['core']['styles'] = $coreAssets['styles'];
+            $h5pIntegration['contents'][$contentIdStr]['scripts'] = $jsFilePaths;
+            $h5pIntegration['contents'][$contentIdStr]['styles'] = $cssFilePaths;
+        }
+
+        $h5pIntegration['contents'][$contentIdStr]['jsonContent'] = json_encode(json_decode($content->getParameters())->params);
+
+        $vars = [
+            'contentId' => $content->getId(),
+            'isFrame' => $content->getLibrary()->isFrame(),
+            'h5pIntegration' => $h5pIntegration,
+            'coreAssets' => $coreAssets,
+            'files' => $files,
+        ];
+
+        //    echo '<pre>';print_r($vars); die();
+
+        return $this->render('@EmmedyH5P/embed.html.twig', $vars);
+
+//dump($h5pIntegration);die();
+
         return new JsonResponse();
     }
 }
