@@ -574,6 +574,7 @@ class H5PSymfony implements \H5PFrameworkInterface
     {
         $library = $this->manager->getRepository('EmmedyH5PBundle:Library')->find($contentData['library']['libraryId']);
         $content->setLibrary($library);
+        $content->setTitle($contentData['title']);
         $content->setParameters($contentData['params']);
         $content->setDisabledFeatures($contentData['disable']);
         $content->setFilteredParameters(null);
@@ -667,6 +668,7 @@ class H5PSymfony implements \H5PFrameworkInterface
                 $dropLibraryCssList = array_merge($dropLibraryCssList, explode(', ', $dependency['library']['dropLibraryCss']));
             }
         }
+
         foreach ($librariesInUse as $dependency) {
             $dropCss = in_array($dependency['library']['machineName'], $dropLibraryCssList);
             $contentLibrary = new ContentLibraries();
@@ -753,7 +755,6 @@ class H5PSymfony implements \H5PFrameworkInterface
             $dependencies[] = ['libraryId' => $library->getId(), 'machineName' => $library->getMachineName(), 'majorVersion' => $library->getMajorVersion(), 'minorVersion' => $library->getMinorVersion(),
                 'patchVersion' => $library->getPatchVersion(), 'preloadedCss' => $library->getPreloadedCss(), 'preloadedJs' => $library->getPreloadedJs(), 'dropCss' => $contentLibrary->isDropCss(), 'dependencyType' => $contentLibrary->getDependencyType()];
         }
-//dump($dependencies);die();
         return $dependencies;
     }
 

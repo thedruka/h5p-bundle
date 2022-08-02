@@ -54,20 +54,12 @@ class H5PController extends Controller
             $h5pIntegration['contents'][$contentIdStr]['styles'] = $cssFilePaths;
         }
 
-/*!!!!
-        $h5pIntegration['contents']['cid-11']['jsonContent'] = '{"media":{"type":{"params":{}},"disableImageZooming":false},"answers":[{"correct":true,"tipsAndFeedback":{"tip":"","chosenFeedback":"","notChosenFeedback":""},"text":"Answer 1<\/div>\n"},{"correct":false,"tipsAndFeedback":{"tip":"","chosenFeedback":"","notChosenFeedback":""},"text":"Answer 2<\/div>\n"}],"overallFeedback":[{"from":0,"to":100,"feedback":"good good"}],"behaviour":{"enableRetry":true,"enableSolutionsButton":true,"enableCheckButton":true,"type":"auto","singlePoint":false,"randomAnswers":true,"showSolutionsRequiresInput":true,"confirmCheckDialog":false,"confirmRetryDialog":false,"autoCheck":false,"passPercentage":100,"showScorePoints":true},"UI":{"checkAnswerButton":"Check","submitAnswerButton":"Submit","showSolutionButton":"Show solution","tryAgainButton":"Retry","tipsLabel":"Show tip","scoreBarLabel":"You got :num out of :total points","tipAvailable":"Tip available","feedbackAvailable":"Feedback available","readFeedback":"Read feedback","wrongAnswer":"Wrong answer","correctAnswer":"Correct answer","shouldCheck":"Should have been checked","shouldNotCheck":"Should not have been checked","noInput":"Please answer before viewing the solution","a11yCheck":"Check the answers. The responses will be marked as correct, incorrect, or unanswered.","a11yShowSolution":"Show the solution. The task will be marked with its correct solution.","a11yRetry":"Retry the task. Reset all responses and start the task over again."},"confirmCheck":{"header":"Finish ?","body":"Are you sure you wish to finish ?","cancelLabel":"Cancel","confirmLabel":"Finish"},"confirmRetry":{"header":"Retry ?","body":"Are you sure you wish to retry ?","cancelLabel":"Cancel","confirmLabel":"Confirm"},"question":"THE QUESTION<\/p>\n"}';
-*/
-
-        $h5pIntegration['contents'][$contentIdStr]['jsonContent'] = json_encode(json_decode($content->getParameters())->params);
-
         $vars = [
             'contentId' => $content->getId(),
             'isFrame' => $content->getLibrary()->isFrame(),
             'h5pIntegration' => $h5pIntegration,
             'files' => $files
         ];
-
-    //    echo '<pre>';print_r($vars); die();
 
         return $this->render('@EmmedyH5P/show.html.twig', $vars);
     }
@@ -87,7 +79,6 @@ class H5PController extends Controller
     {
         $this->get('emmedy_h5p.core')->updateContentTypeCache();
         return $this->render('@EmmedyH5P/update.html.twig', []);
-        //return $this->handleRequest($request);
     }
 
     /**
@@ -106,13 +97,38 @@ class H5PController extends Controller
             $formData['parameters'] = $content->getParameters();
             $formData['library'] = (string)$content->getLibrary();
         }
+
         $form = $this->createForm(H5pType::class, $formData);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $data = $form->getData();
-            $contentId = $this->get('emmedy_h5p.library_storage')->storeLibraryData($data['library'], $data['parameters'], $content);
 
-dump("-------------------------------------------------------------");die();
+            $params = json_encode(json_decode($data['parameters'])->params);
+            $contentId = $this->get('emmedy_h5p.library_storage')->storeLibraryData(
+                $data['library'],
+                $params,
+                $content,
+                $data['title']
+            );
+
+            $contentData = [
+                "id" => $content->getId(),
+                "library" => [
+                    "id" => $content->getLibrary()->id,
+                    "name" => $content->getLibrary()->machineName,
+                    "majorVersion" => $content->getLibrary()->majorVersion,
+                    "minorVersion" => $content->getLibrary()->minorVersion,
+                    "embedTypes" => $content->getLibrary()->embedTypes,
+                    "fullscreen" => $content->getLibrary()->fullscreen
+                ],
+                "slug" => "interactive-content",
+                "params" => $content->getParameters(),
+                "title" => $content->getTitle(),
+                "disabledFeatures" => $content->getDisabledFeatures()
+            ];
+
+            $this->get('emmedy_h5p.core')->filterParameters($contentData);
 
             return $this->redirectToRoute('emmedy_h5p_h5p_show', ['content' => $contentId]);
         }

@@ -44,8 +44,6 @@ class InteractionController extends Controller
 
         $preloaded_dependencies = $this->get('emmedy_h5p.core')->loadContentDependencies($content->getId(), 'preloaded');
 
-dump($preloaded_dependencies);die();
-
         $files = $this->get('emmedy_h5p.core')->getDependenciesFiles($preloaded_dependencies, $this->get('emmedy_h5p.options')->getRelativeH5PPath());
 
         if ($content->getLibrary()->isFrame()) {

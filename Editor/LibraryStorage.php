@@ -34,7 +34,7 @@ class LibraryStorage
         $this->entityManager = $entityManager;
     }
 
-    public function storeLibraryData($library, $parameters, Content $content = null)
+    public function storeLibraryData($library, $parameters, Content $content = null, $title = '')
     {
         $libraryData = Utilities::getLibraryProperties($library);
         $libraryData['libraryId'] = $this->entityManager->getRepository('EmmedyH5PBundle:Library')->findIdBy($libraryData['machineName'], $libraryData['majorVersion'], $libraryData['minorVersion']);
@@ -54,6 +54,7 @@ class LibraryStorage
 
         $contentData = [
             'library' => $libraryData,
+            'title' => $title,
             'params' => $parameters,
             'disable' => 0
         ];
@@ -69,8 +70,6 @@ class LibraryStorage
     private function updateLibraryFiles($contentId, $contentData, $oldLibrary, $oldParameters)
     {
         // Keep new files, delete files from old parameters
-
-        //// TODO: trace dependencies storing from contendData['params']
         $this->editor->processParameters(
             $contentId,
             $contentData['library'],
