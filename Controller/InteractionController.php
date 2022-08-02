@@ -60,8 +60,6 @@ class InteractionController extends Controller
             $h5pIntegration['contents'][$contentIdStr]['styles'] = $cssFilePaths;
         }
 
-        $h5pIntegration['contents'][$contentIdStr]['jsonContent'] = json_encode(json_decode($content->getParameters())->params);
-
         $vars = [
             'contentId' => $content->getId(),
             'isFrame' => $content->getLibrary()->isFrame(),
