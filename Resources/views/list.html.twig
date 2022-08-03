@@ -4,6 +4,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Title</th>
                     <th>Library</th>
                     <th>ContentId</th>
                     <th>Action</th>
@@ -12,9 +13,23 @@
             <tbody>
                 {% for content in contents %}
                 <tr>
+                    <td>{{ content.title }}</td>
                     <td>{{ content.library }}</td>
                     <td>{{ content.id }}</td>
-                    <td><a href="{{ path('emmedy_h5p_h5p_edit', {'content': content.id}) }}"><span class="oi oi-pencil"></span>edit</a> | <a href="{{ path('emmedy_h5p_h5p_show', {'content': content.id}) }}">show</a> | <a href="{{ path('emmedy_h5p_h5p_delete', {'contentId': content.id}) }}">delete</a></td>
+                    <td>
+                        <a href="{{ path('emmedy_h5p_h5p_edit', {'content': content.id}) }}">
+                            <span class="oi oi-pencil"></span>edit
+                        </a> |
+                        <a href="{{ path('emmedy_h5p_h5p_show', {'content': content.id}) }}">
+                            show
+                        </a> |
+                        <a target="_blank" href="{{ path('emmedy_h5p_interaction_embed', {'content': content.id}) }}">
+                            embed
+                        </a> |
+                        <a onclick="if (!confirm('Are you sure?')) return false;" href="{{ path('emmedy_h5p_h5p_delete', {'contentId': content.id}) }}">
+                            delete
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

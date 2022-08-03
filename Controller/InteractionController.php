@@ -41,9 +41,7 @@ class InteractionController extends Controller
         $h5pIntegration = $this->get('emmedy_h5p.integration')->getGenericH5PIntegrationSettings();
         $contentIdStr = 'cid-' . $content->getId();
         $h5pIntegration['contents'][$contentIdStr] = $this->get('emmedy_h5p.integration')->getH5PContentIntegrationSettings($content);
-
         $preloaded_dependencies = $this->get('emmedy_h5p.core')->loadContentDependencies($content->getId(), 'preloaded');
-
         $files = $this->get('emmedy_h5p.core')->getDependenciesFiles($preloaded_dependencies, $this->get('emmedy_h5p.options')->getRelativeH5PPath());
 
         if ($content->getLibrary()->isFrame()) {
@@ -58,6 +56,9 @@ class InteractionController extends Controller
             $h5pIntegration['core']['styles'] = $coreAssets['styles'];
             $h5pIntegration['contents'][$contentIdStr]['scripts'] = $jsFilePaths;
             $h5pIntegration['contents'][$contentIdStr]['styles'] = $cssFilePaths;
+            $h5pIntegration['contents'][$contentIdStr]['displayOptions']['copyright'] = false;
+            $h5pIntegration['contents'][$contentIdStr]['displayOptions']['copy'] = false;
+            $h5pIntegration['contents'][$contentIdStr]['displayOptions']['icon'] = false;
         }
 
         $vars = [
@@ -67,13 +68,6 @@ class InteractionController extends Controller
             'coreAssets' => $coreAssets,
             'files' => $files,
         ];
-
-        //    echo '<pre>';print_r($vars); die();
-
         return $this->render('@EmmedyH5P/embed.html.twig', $vars);
-
-//dump($h5pIntegration);die();
-
-        return new JsonResponse();
     }
 }

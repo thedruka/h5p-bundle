@@ -92,11 +92,11 @@ class H5PController extends Controller
     private function handleRequest(Request $request, Content $content = null)
     {
         $formData = null;
-        $parametersFull = (object)[
-            "params" => json_decode($content->getParameters()),
-            "metadata" => json_decode($content->getMetadata()),
-        ];
         if ($content) {
+            $parametersFull = (object)[
+                "params" => json_decode($content->getParameters()),
+                "metadata" => json_decode($content->getMetadata()),
+            ];
             $formData['title'] = (string)$content->getTitle();
             $formData['parameters'] = json_encode($parametersFull);
             $formData['library'] = (string)$content->getLibrary();
@@ -118,24 +118,7 @@ class H5PController extends Controller
                 $metadata
             );
 
-            $contentData = [
-                "id" => $content->getId(),
-                "library" => [
-                    "id" => $content->getLibrary()->id,
-                    "name" => $content->getLibrary()->machineName,
-                    "majorVersion" => $content->getLibrary()->majorVersion,
-                    "minorVersion" => $content->getLibrary()->minorVersion,
-                    "embedTypes" => $content->getLibrary()->embedTypes,
-                    "fullscreen" => $content->getLibrary()->fullscreen
-                ],
-                "slug" => "interactive-content",
-                "params" => $content->getParameters(),
-                "title" => $content->getTitle(),
-                "disabledFeatures" => $content->getDisabledFeatures()
-            ];
-
-            $this->get('emmedy_h5p.core')->filterParameters($contentData);
-
+            $this->get('emmedy_h5p.core')->filterParameters($data);
             return $this->redirectToRoute('emmedy_h5p_h5p_show', ['content' => $contentId]);
         }
         $h5pIntegration = $this->get('emmedy_h5p.integration')->getEditorIntegrationSettings($content ? $content->getId() : null);
