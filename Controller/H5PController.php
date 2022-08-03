@@ -92,9 +92,13 @@ class H5PController extends Controller
     private function handleRequest(Request $request, Content $content = null)
     {
         $formData = null;
+        $parametersFull = (object)[
+            "params" => json_decode($content->getParameters()),
+            "metadata" => json_decode($content->getMetadata()),
+        ];
         if ($content) {
             $formData['title'] = (string)$content->getTitle();
-            $formData['parameters'] = $content->getParameters();
+            $formData['parameters'] = json_encode($parametersFull);
             $formData['library'] = (string)$content->getLibrary();
         }
 
@@ -105,11 +109,13 @@ class H5PController extends Controller
             $data = $form->getData();
 
             $params = json_encode(json_decode($data['parameters'])->params);
+            $metadata = json_encode(json_decode($data['parameters'])->metadata);
             $contentId = $this->get('emmedy_h5p.library_storage')->storeLibraryData(
                 $data['library'],
                 $params,
                 $content,
-                $data['title']
+                $data['title'],
+                $metadata
             );
 
             $contentData = [

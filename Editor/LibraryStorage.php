@@ -34,7 +34,7 @@ class LibraryStorage
         $this->entityManager = $entityManager;
     }
 
-    public function storeLibraryData($library, $parameters, Content $content = null, $title = '')
+    public function storeLibraryData($library, $parameters, Content $content = null, $title = '', $metadata = null)
     {
         $libraryData = Utilities::getLibraryProperties($library);
         $libraryData['libraryId'] = $this->entityManager->getRepository('EmmedyH5PBundle:Library')->findIdBy($libraryData['machineName'], $libraryData['majorVersion'], $libraryData['minorVersion']);
@@ -55,6 +55,7 @@ class LibraryStorage
         $contentData = [
             'library' => $libraryData,
             'title' => $title,
+            'metadata' => $metadata,
             'params' => $parameters,
             'disable' => 0
         ];

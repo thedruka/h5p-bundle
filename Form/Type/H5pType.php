@@ -12,9 +12,9 @@ class H5pType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', HiddenType::class, [ "required" => false ])
-            ->add('library', HiddenType::class, [ "required" => false ])
-            ->add('parameters', HiddenType::class, [ "required" => false ])
+            ->add('title', TextType::class, [ "required" => false ])
+            ->add('library', TextType::class, [ "required" => false ])
+            ->add('parameters', TextType::class, [ "required" => false ])
             ->add('save', SubmitType::class, array('label' => 'Save'));
     }
 }

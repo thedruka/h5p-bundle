@@ -37,6 +37,13 @@ class Content
     /**
      * @var string
      *
+     * @ORM\Column(name="metadata", type="text", nullable=true)
+     */
+    private $metadata;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="title", type="text", nullable=true)
      */
     private $title;
@@ -148,10 +155,25 @@ class Content
         return $this->title;
     }
     /**
-     * @param string $parameters
+     * @param string $title
      */
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+    /**
+     * @param string $metadata
+     */
+    public function setMetadata($metadata)
+    {
+        $this->metadata = $metadata;
     }
 }

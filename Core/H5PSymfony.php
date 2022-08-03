@@ -576,6 +576,7 @@ class H5PSymfony implements \H5PFrameworkInterface
         $content->setLibrary($library);
         $content->setTitle($contentData['title']);
         $content->setParameters($contentData['params']);
+        $content->setMetadata($contentData['metadata']);
         $content->setDisabledFeatures($contentData['disable']);
         $content->setFilteredParameters(null);
 
