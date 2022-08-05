@@ -1,10 +1,14 @@
 {% extends '@EmmedyH5P/layout.html.twig' %}
 
 {% block content %}
+    <style>
+        #h5p-save {
+            display: none;
+        }
+    </style>
     {{ form_start(form) }}
         <div id="h5p-editor">Waiting for javascript...</div>
-        <br />
-        {{ form_row(form.save, {'attr': {'class': 'btn btn-success'}}) }}
+        {{ form_row(form.save, {'attr': {'class': 'btn btn-success'}, 'id': 'h5p-save'}) }}
         {{ form_row(form.title) }}
         {{ form_row(form.library) }}
         {{ form_row(form.parameters) }}
@@ -14,4 +18,9 @@
 {% block javascripts %}
     {{ include('@EmmedyH5P/edit_javascripts.html.twig') }}
     <script src="{{ asset('bundles/emmedyh5p/h5p/symfony-h5p.js') }}"></script>
+    <script>
+        if (window.parent.h5p_buttons){
+            window.parent.h5p_buttons([ 'SAVE', 'LIST' ]);
+        }
+    </script>
 {% endblock %}

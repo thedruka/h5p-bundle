@@ -2,11 +2,17 @@
 <html>
 <head>
     <title>H5P</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .container {
+            padding: 30px;
+        }
+        .sf-minitoolbar { display: none !important; }
+    </style>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
 <div class="container">
+    {#
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <span class="navbar-brand">PTA-Channel H5P test</span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,8 +34,10 @@
             </ul>
         </div>
     </nav>
-    <br /><br />
+    #}
+
     {% block content %}{% endblock %}
+
 </div>
 <script>
     function dbg(name, obj){

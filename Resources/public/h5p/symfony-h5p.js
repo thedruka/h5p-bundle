@@ -42,11 +42,6 @@ var ns = H5PEditor;
             if (h5peditor !== undefined && !formIsUpdated){
                 event.preventDefault();
                 h5peditor.getContent(content => {
-                    /*
-                    console.info('h5peditor.content', content);
-                    console.info('h5peditor.content.params', content.params);
-                    console.info('h5peditor.content.library', content.library);
-                    */
                     $library.val(content.library);
                     $parameters.val(content.params);
                     $title.val(content.title);
