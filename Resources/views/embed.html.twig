@@ -21,12 +21,11 @@
         {% endfor %}
         <style>
             .sf-minitoolbar { display: none !important; }
+            body { padding:0; margin:0; font-family: 'Open Sans',sans-serif }
         </style>
     </head>
-    <body style="padding:0; margin:0;">
-        <div data-iframe-height>
-            <div class="h5p-content" data-content-id="{{ contentId }}"></div>
-        </div>
+    <body>
+        <div class="h5p-content" data-content-id="{{ contentId }}"></div>
         <script>
             H5PIntegration = {{ h5pIntegration|json_encode|raw }};
         </script>
