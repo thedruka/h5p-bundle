@@ -20,7 +20,16 @@ class InteractionController extends Controller
      */
     public function setFinished(Request $request, $token)
     {
-        return new JsonResponse();
+        if (!\H5PCore::validToken('result', $token)) {
+            \H5PCore::ajaxError('Invalid security token');
+        }
+        /* @var ResultService $rs */
+        $rs = $this->get('emmedy_h5p.result_storage');
+        $result = $rs->handleRequestFinished($request, $this->getUser()->getId());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($result);
+        $em->flush();
+        return new JsonResponse(['success' => true]);
     }
 
     /**

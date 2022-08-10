@@ -100,7 +100,7 @@ class H5PIntegration
         $settings = array(
             'baseUrl' => $this->getSiteUrl(),
             'url' => $this->options->getRelativeH5PPath(),
-            'postUserStatistics' => is_object($user) ? $user->getId() : null,
+            'postUserStatistics' => true,//is_object($user) ? $user->getId() : null,
             'ajax' => array(
                 'setFinished' => $setFinishedUrl,
                 'contentUserData' => $contentUserDataUrl,
@@ -113,6 +113,9 @@ class H5PIntegration
                 'H5P' => $this->core->getLocalization(),
             ),
             'hubIsEnabled' => $hubIsEnabled,
+            'reportingIsEnabled' => false,
+            'libraryConfig' => null,
+            'libraryUrl' => $this->getSiteUrl() . "/bundles/emmedyh5p/h5p/h5p-core/js",
             'siteUrl' => $this->getSiteUrl()
         );
 
