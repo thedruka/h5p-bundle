@@ -33,6 +33,25 @@ class InteractionController extends Controller
     }
 
     /**
+     * xAPI data statement logging
+     *
+     * @Route("/log-action/{token}")
+     */
+    public function logAction(Request $request, $token)
+    {
+        if (!\H5PCore::validToken('result', $token)) {
+            //\H5PCore::ajaxError('Invalid security token');
+        }
+        /* @var ResultService $rs */
+        $rs = $this->get('emmedy_h5p.result_storage');
+        $result = $rs->handleRequestAction($request, $this->getUser()->getId());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($result);
+        $em->flush();
+        return new JsonResponse(['success' => true]);
+    }
+
+    /**
      * Handles insert, updating and deleting content user data through AJAX.
      *
      * @Route("/content-user-data/{contentId}/{dataType}/{subContentId}")
