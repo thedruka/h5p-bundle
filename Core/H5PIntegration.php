@@ -95,6 +95,7 @@ class H5PIntegration
         // Create AJAX URLs
         $setFinishedUrl = $this->router->generate('emmedy_h5p_interaction_setfinished', ['token' => \H5PCore::createToken('result')]);
         $contentUserDataUrl = $this->router->generate('emmedy_h5p_interaction_contentuserdata', ['contentId' => ':contentId', 'dataType' => ':dataType', 'subContentId' => ':subContentId', 'token' => \H5PCore::createToken('contentuserdata')]);
+        $contentActionUrl = $this->router->generate('emmedy_h5p_interaction_log', ['token' => \H5PCore::createToken('contentaction')]);
 
         // Define the generic H5PIntegration settings
         $settings = array(
@@ -104,6 +105,7 @@ class H5PIntegration
             'ajax' => array(
                 'setFinished' => $setFinishedUrl,
                 'contentUserData' => $contentUserDataUrl,
+                'contentAction' => $contentActionUrl
             ),
             'core' => $this->getCoreAssets(),
             'loadedCss' => [],

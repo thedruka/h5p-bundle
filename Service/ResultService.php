@@ -4,6 +4,7 @@ namespace Emmedy\H5PBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Emmedy\H5PBundle\Entity\ContentResult;
+use Emmedy\H5PBundle\Entity\ContentAction;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResultService
@@ -31,6 +32,7 @@ class ResultService
         $contentId = $request->get('contentId', false);
         if (!$contentId) {
             \H5PCore::ajaxError('Invalid content');
+            die();
         }
         // TODO: Fire 'h5p_alter_user_result' event here.
         $contentRepo = $this->em->getRepository('EmmedyH5PBundle:Content');
@@ -46,6 +48,30 @@ class ResultService
         $result->setScore($request->get('score') ?? $result->getScore());
         $result->setTime($request->get('time') ?? $result->getTime());
         return $result;
+    }
+
+    /**
+     * @param Request $request
+     * @param $userId
+     * @return ContentAction
+     */
+    public function handleRequestAction(Request $request, $userId)
+    {
+        $contentId = $request->get('contentId', false);
+        if (!$contentId) {
+            \H5PCore::ajaxError('Invalid content');
+            die();
+        }
+        if (!$userId) {
+            \H5PCore::ajaxError('Invalid user');
+            die();
+        }
+        $user = $this->em->getRepository('AppBundle:User')->find($userId);
+        $action = new ContentAction($user);
+        $action->setContent($this->em->getRepository('EmmedyH5PBundle:Content')->find($contentId));
+        $action->setData($request->get('data') ? $request->get('data') : '{}');
+        $action->setTime($request->get('time') ? $request->get('time') : time());
+        return $action;
     }
 
     /**

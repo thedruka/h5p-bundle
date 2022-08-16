@@ -29,8 +29,15 @@
         <script>
             H5PIntegration = {{ h5pIntegration|json_encode|raw }};
             H5P.externalDispatcher.on('xAPI', function (event) {
-                console.info('XAPI_EVENT', event);
-                console.info('bubbles', event.getBubbles());
+                if (event.data.statement.result){
+                    //console.info('XAPI_EVENT', event);
+                    var fd = new FormData();
+                    fd.append('contentId', document.querySelector('.h5p-content').getAttribute('data-content-id'));
+                    fd.append('data', JSON.stringify(event.data.statement));
+                    var request = new XMLHttpRequest();
+                    request.open("POST", H5PIntegration.ajax.contentAction);
+                    request.send(fd);
+                }
             });
         </script>
     </body>

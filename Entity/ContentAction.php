@@ -27,11 +27,12 @@ class ContentAction
      */
     private $content;
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $userId;
+    private $user;
     /**
      * @var integer|null
      *
@@ -41,17 +42,17 @@ class ContentAction
     /**
      * @var string
      *
-     * @ORM\Column(name="data", type="longtext")
+     * @ORM\Column(name="data", type="text")
      */
     private $data;
 
     /**
      * ContentResult constructor.
-     * @param string $userId
+     * @param User $user
      */
-    public function __construct($userId)
+    public function __construct($user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
     }
     /**
      * @return int
@@ -75,67 +76,25 @@ class ContentAction
         $this->content = $content;
     }
     /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    /**
      * @return string
      */
-    public function getUserId()
+    public function getData()
     {
-        return $this->userId;
+        return $this->data;
     }
     /**
-     * @return int|null
+     * @param string $data
      */
-    public function getScore()
+    public function setData($data)
     {
-        return $this->score;
-    }
-    /**
-     * @param int|null $score
-     */
-    public function setScore($score)
-    {
-        $this->score = $score;
-    }
-    /**
-     * @return int|null
-     */
-    public function getMaxScore()
-    {
-        return $this->maxScore;
-    }
-    /**
-     * @param int|null $maxScore
-     */
-    public function setMaxScore($maxScore)
-    {
-        $this->maxScore = $maxScore;
-    }
-    /**
-     * @return int|null
-     */
-    public function getOpened()
-    {
-        return $this->opened;
-    }
-    /**
-     * @param int|null $opened
-     */
-    public function setOpened($opened)
-    {
-        $this->opened = $opened;
-    }
-    /**
-     * @return int|null
-     */
-    public function getFinished()
-    {
-        return $this->finished;
-    }
-    /**
-     * @param int|null $finished
-     */
-    public function setFinished($finished)
-    {
-        $this->finished = $finished;
+        $this->data = $data;
     }
     /**
      * @return int|null

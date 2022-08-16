@@ -23,6 +23,9 @@ class InteractionController extends Controller
         if (!\H5PCore::validToken('result', $token)) {
             \H5PCore::ajaxError('Invalid security token');
         }
+        if ($this->getUser() === null){
+            \H5PCore::ajaxError('Not logged in');
+        }
         /* @var ResultService $rs */
         $rs = $this->get('emmedy_h5p.result_storage');
         $result = $rs->handleRequestFinished($request, $this->getUser()->getId());
