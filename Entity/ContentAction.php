@@ -90,6 +90,21 @@ class ContentAction
         return $this->data;
     }
     /**
+     * @return object
+     */
+    public function getDataObject()
+    {
+        return json_decode($this->getData());
+    }
+    /**
+     * @return string
+     */
+    public function getTimePretty()
+    {
+        return date('d.m.Y H:i', $this->getTime());
+    }
+
+    /**
      * @param string $data
      */
     public function setData($data)
