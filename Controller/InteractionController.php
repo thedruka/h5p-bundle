@@ -22,9 +22,11 @@ class InteractionController extends Controller
     {
         if (!\H5PCore::validToken('result', $token)) {
             \H5PCore::ajaxError('Invalid security token');
+            die();
         }
         if ($this->getUser() === null){
             \H5PCore::ajaxError('Not logged in');
+            die();
         }
         /* @var ResultService $rs */
         $rs = $this->get('emmedy_h5p.result_storage');
@@ -42,8 +44,13 @@ class InteractionController extends Controller
      */
     public function logAction(Request $request, $token)
     {
-        if (!\H5PCore::validToken('result', $token)) {
-            //\H5PCore::ajaxError('Invalid security token');
+        if (!\H5PCore::validToken('contentaction', $token)) {
+            \H5PCore::ajaxError('Invalid security token');
+            die();
+        }
+        if ($this->getUser() === null){
+            \H5PCore::ajaxError('Not logged in');
+            die();
         }
         /* @var ResultService $rs */
         $rs = $this->get('emmedy_h5p.result_storage');
