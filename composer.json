@@ -17,7 +17,7 @@
     "doctrine/orm": "~2.4",
     "guzzlehttp/guzzle": "~6.0",
     "h5p/h5p-core": "1.24.0",
-    "h5p/h5p-editor": "1.24.1"
+    "h5p/h5p-editor": "1.24.4"
   },
   "autoload": {
     "psr-4": { "Emmedy\\H5PBundle\\": "" }

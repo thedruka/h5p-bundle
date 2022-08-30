@@ -228,7 +228,7 @@ class H5PIntegration
     public function getEditorIntegrationSettings($contentId = null)
     {
         $editorSettings = [
-            'filesPath' => $this->options->getRelativeH5PPath(),
+            'filesPath' => $this->options->getRelativeH5PPath()."/editor",
             'fileIcon' => [
                 'path' => $this->getH5PAssetUrl() . "/h5p-editor/images/binary-file.png",
                 'width' => 50,
@@ -241,6 +241,7 @@ class H5PIntegration
             'metadataSemantics' => $this->contentValidator->getMetadataSemantics(),
             'assets' => $this->getEditorAssets(),
             'apiVersion' => \H5PCore::$coreApi,
+            'language' => 'en'
         ];
         if ($contentId) {
             $editorSettings['contentId'] = $contentId;
@@ -326,7 +327,8 @@ class H5PIntegration
         $chosenLanguage = "{$languageFolder}/{$language}.js";
         $cacheBuster = $this->getCacheBuster();
 
-        return (file_exists($this->options->getAbsoluteWebPath() . $chosenLanguage) ? $chosenLanguage : $defaultLanguage) . $cacheBuster;
+        return $defaultLanguage . $cacheBuster;
+        //return (file_exists($this->options->getAbsoluteWebPath() . $chosenLanguage) ? $chosenLanguage : $defaultLanguage) . $cacheBuster;
     }
 
     private function getH5PAssetUrl()

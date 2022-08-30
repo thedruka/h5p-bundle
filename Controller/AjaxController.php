@@ -84,10 +84,12 @@ class AjaxController extends Controller
             $request->get('machineName'),
             $request->get('majorVersion'),
             $request->get('minorVersion'),
-            $request->getLocale(),
+            //$request->getLocale(),
+            'en',
             $integration->getSiteUrl().$options->getRelativeH5PPath(),
             $options->getOption('storage_dir'),
-            $request->getLocale()
+            'en'
+            //$request->getLocale()
         );
 
         exit();

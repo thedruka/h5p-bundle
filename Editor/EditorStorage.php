@@ -87,7 +87,7 @@ class EditorStorage implements \H5peditorStorage
      * @return array List of possible language codes
      */
     public function getAvailableLanguages($machineName, $majorVersion, $minorVersion){
-        return [ 'en', 'de' ];
+        return [ 'en' ];
     }
 
     /**

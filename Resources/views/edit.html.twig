@@ -1,5 +1,15 @@
 {% extends '@EmmedyH5P/layout.html.twig' %}
 
+{% block javascripts %}
+    {{ include('@EmmedyH5P/edit_javascripts.html.twig') }}
+    <script src="{{ asset('bundles/emmedyh5p/h5p/symfony-h5p.js') }}"></script>
+    <script>
+        if (window.parent.h5p_buttons){
+            window.parent.h5p_buttons([ 'SAVE', 'LIST' ]);
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <style>
         #h5p-save {
@@ -13,14 +23,4 @@
         {{ form_row(form.library) }}
         {{ form_row(form.parameters) }}
     {{ form_end(form) }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ include('@EmmedyH5P/edit_javascripts.html.twig') }}
-    <script src="{{ asset('bundles/emmedyh5p/h5p/symfony-h5p.js') }}"></script>
-    <script>
-        if (window.parent.h5p_buttons){
-            window.parent.h5p_buttons([ 'SAVE', 'LIST' ]);
-        }
-    </script>
 {% endblock %}
