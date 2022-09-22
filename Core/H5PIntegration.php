@@ -228,7 +228,7 @@ class H5PIntegration
     public function getEditorIntegrationSettings($contentId = null)
     {
         $editorSettings = [
-            'filesPath' => $this->options->getRelativeH5PPath()."/editor",
+            'filesPath' => $this->options->getRelativeH5PPath(),
             'fileIcon' => [
                 'path' => $this->getH5PAssetUrl() . "/h5p-editor/images/binary-file.png",
                 'width' => 50,
