@@ -86,7 +86,7 @@ class AjaxController extends Controller
             $request->get('minorVersion'),
             //$request->getLocale(),
             'en',
-            $integration->getSiteUrl().$options->getRelativeH5PPath(),
+            'h5p',
             $options->getOption('storage_dir'),
             'en'
             //$request->getLocale()

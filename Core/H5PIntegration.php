@@ -118,7 +118,8 @@ class H5PIntegration
             'reportingIsEnabled' => false,
             'libraryConfig' => null,
             'libraryUrl' => $this->getSiteUrl() . "/bundles/emmedyh5p/h5p/h5p-core/js",
-            'siteUrl' => $this->getSiteUrl()
+            'siteUrl' => $this->getSiteUrl(),
+            'pluginCacheBuster' => $this->getCacheBuster()
         );
 
         if (is_object($user)) {
